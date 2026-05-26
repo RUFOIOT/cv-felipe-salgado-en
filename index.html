@@ -69,7 +69,7 @@
       min-height: 100vh;
       background:
         linear-gradient(160deg, rgba(13,27,42,0.88) 0%, rgba(13,27,42,0.72) 50%, rgba(245,158,11,0.18) 100%),
-        url('images/57442e44-a016-446a-a48d-5805093bbd35.jpg') center 30% / cover no-repeat;
+        url('images/57442e44-a016-446a-a48d-5805093bbd35.jpg') center 8% / cover no-repeat;
       display: flex; align-items: center;
       padding: 100px 40px 80px;
     }
@@ -397,26 +397,57 @@
       text-align: center; padding: 100px 40px;
     }
     .contact-section .section-title { color: var(--white); }
-    .contact-section .section-sub { color: rgba(255,255,255,0.65); margin: 0 auto 48px; }
-    .contact-cards {
-      display: flex; justify-content: center; flex-wrap: wrap;
-      gap: 20px; margin-bottom: 48px;
+    .contact-section .section-sub { color: rgba(255,255,255,0.65); margin: 0 auto 56px; max-width: 560px; }
+    /* channel cards grid */
+    .contact-channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px; max-width: 860px; margin: 0 auto 52px;
     }
-    .contact-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 20px 32px; border-radius: var(--radius);
-      color: var(--white); text-decoration: none;
-      font-weight: 600; font-size: 0.9rem;
+    .channel-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: var(--radius);
+      padding: 28px 24px 24px;
+      text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
       transition: all 0.25s;
-      display: flex; align-items: center; gap: 10px;
+      position: relative; overflow: hidden;
     }
-    .contact-card:hover { background: rgba(245,158,11,0.2); border-color: var(--gold); color: var(--gold); }
+    .channel-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .channel-card:hover { background: rgba(245,158,11,0.12); border-color: var(--gold); transform: translateY(-4px); }
+    .channel-card:hover::after { opacity: 1; }
+    .channel-icon { font-size: 2rem; line-height: 1; }
+    .channel-name {
+      color: var(--white); font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+    .channel-desc {
+      color: rgba(255,255,255,0.5); font-size: 0.78rem;
+      text-align: center; line-height: 1.5;
+    }
+    .channel-action {
+      margin-top: 6px;
+      background: rgba(245,158,11,0.15);
+      color: var(--gold); border: 1px solid rgba(245,158,11,0.35);
+      padding: 6px 18px; border-radius: 50px;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .channel-card:hover .channel-action { background: var(--gold); color: var(--navy); }
+    /* main CTA */
     .cta-main {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--gold); color: var(--navy);
-      padding: 18px 44px; border-radius: 12px;
-      font-weight: 800; font-size: 1.1rem;
+      padding: 18px 48px; border-radius: 12px;
+      font-weight: 800; font-size: 1.15rem;
       text-decoration: none; transition: all 0.25s;
       box-shadow: 0 8px 32px rgba(245,158,11,0.35);
     }
@@ -424,8 +455,9 @@
     .cta-pulse { animation: pulse 2s infinite; }
     @keyframes pulse {
       0%, 100% { box-shadow: 0 8px 32px rgba(245,158,11,0.35); }
-      50% { box-shadow: 0 8px 48px rgba(245,158,11,0.6); }
+      50% { box-shadow: 0 8px 52px rgba(245,158,11,0.65); }
     }
+    .cta-hint { color: rgba(255,255,255,0.38); font-size: 0.78rem; margin-top: 18px; }
 
     /* ─── FOOTER ───────────────────────────────────────────────────── */
     footer {
@@ -989,24 +1021,48 @@
       <span class="section-label" style="color:var(--gold);">Work Together</span>
       <h2 class="section-title">Have a Project That<br>Changes the World?</h2>
       <p class="section-sub">
-        Blockchain, AI, cybersecurity, sustainability, ODS — if it has real impact and global vision, let's talk.
-        I'm available for advisory, partnerships, keynotes, and co-build engagements.
+        Blockchain, AI, cybersecurity, sustainability — if it has real impact and global vision, let's talk.
+        Available for advisory, partnerships, keynotes, and co-build engagements.
       </p>
-      <div class="contact-cards">
-        <a href="https://wa.me/593999793094" class="contact-card" target="_blank">
-          📱 WhatsApp
+
+      <!-- Channel cards -->
+      <div class="contact-channels">
+        <a href="https://wa.me/593999793094?text=Hi%20Felipe!%20I%20visited%20your%20portfolio%20and%20I%27d%20like%20to%20connect."
+           class="channel-card" target="_blank">
+          <div class="channel-icon">📱</div>
+          <div class="channel-name">WhatsApp</div>
+          <div class="channel-desc">Fastest response.<br>Direct line, no filters.</div>
+          <span class="channel-action">Message now</span>
         </a>
-        <a href="https://linkedin.com/in/felipesalgado" class="contact-card" target="_blank">
-          💼 LinkedIn
+        <a href="https://linkedin.com/in/felipesalgado"
+           class="channel-card" target="_blank">
+          <div class="channel-icon">💼</div>
+          <div class="channel-name">LinkedIn</div>
+          <div class="channel-desc">Connect professionally.<br>View full work history.</div>
+          <span class="channel-action">Connect</span>
         </a>
-        <a href="https://rufoiot.github.io/cv-felipe-salgado-v3/" class="contact-card" target="_blank">
-          🌐 Full Portfolio ES
+        <a href="mailto:contacto@felipesalgado.com"
+           class="channel-card">
+          <div class="channel-icon">✉️</div>
+          <div class="channel-name">Email</div>
+          <div class="channel-desc">For formal proposals<br>&amp; detailed briefs.</div>
+          <span class="channel-action">Send email</span>
+        </a>
+        <a href="https://rufoiot.github.io/cv-felipe-salgado-v3/"
+           class="channel-card" target="_blank">
+          <div class="channel-icon">🌐</div>
+          <div class="channel-name">Portfolio ES</div>
+          <div class="channel-desc">Full Spanish version<br>with extended detail.</div>
+          <span class="channel-action">View →</span>
         </a>
       </div>
+
+      <!-- Primary CTA -->
       <a href="https://wa.me/593999793094?text=Hi%20Felipe!%20I%20visited%20your%20portfolio%20and%20I%27d%20like%20to%20connect."
          class="cta-main cta-pulse" target="_blank">
         💬 Start the Conversation →
       </a>
+      <p class="cta-hint">Usually replies within a few hours · Quito, Ecuador (GMT−5)</p>
     </div>
   </section>
 
