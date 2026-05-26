@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Felipe Salgado — Arquitecto de IA · Especialista Blockchain · Asesor Estratégico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F8FAFC;
+      color: #1E293B;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --navy:   #0D1B2A;
+      --navy2:  #152236;
+      --gold:   #F59E0B;
+      --gold2:  #D97706;
+      --white:  #FFFFFF;
+      --gray:   #F1F5F9;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --radius: 14px;
+      --shadow: 0 8px 32px rgba(13,27,42,0.12);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,27,42,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      border-bottom: 1px solid rgba(245,158,11,0.2);
+    }
+    nav .brand { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul li a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+    nav ul li a:hover { color: var(--gold); }
+    nav .lang-switch { display: flex; align-items: center; gap: 12px; }
+    nav .lang-btn { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    nav .lang-btn:hover { color: var(--gold); }
+    nav .lang-btn.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+    nav .cta-nav { background: var(--gold); color: var(--navy); padding: 8px 20px; border-radius: 8px; font-size: 0.82rem; font-weight: 700; text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: background 0.2s; }
+    nav .cta-nav:hover { background: var(--gold2); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(13,27,42,0.88) 0%, rgba(13,27,42,0.72) 50%, rgba(245,158,11,0.18) 100%),
+        url('../images/57442e44-a016-446a-a48d-5805093bbd35.jpg') center 8% / cover no-repeat;
+      display: flex; align-items: center;
+      padding: 100px 40px 80px;
+    }
+    .hero-inner { max-width: 820px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.4); color: var(--gold); border-radius: 50px; padding: 6px 16px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 900; color: var(--white); line-height: 1.05; margin-bottom: 20px; }
+    .hero h1 span { color: var(--gold); }
+    .hero .subtitle { font-size: clamp(1rem, 2.2vw, 1.25rem); color: rgba(255,255,255,0.82); max-width: 600px; margin-bottom: 40px; font-weight: 300; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
+    .pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.9); padding: 6px 16px; border-radius: 50px; font-size: 0.82rem; font-weight: 500; }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 32px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.35); }
+    .btn-secondary { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: var(--white); padding: 14px 32px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.25s; }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* SECTION BASE */
+    section { padding: 96px 40px; }
+    section:nth-child(even) { background: var(--white); }
+    .section-label { display: inline-block; color: var(--gold2); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; color: var(--navy); line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 600px; margin-bottom: 56px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* STATS BAR */
+    .stats-bar { background: var(--navy); padding: 44px 40px; }
+    .stats-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px; }
+    .stat { text-align: center; padding: 16px; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+    .stat-label { color: rgba(255,255,255,0.72); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-img-wrap { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .about-img-wrap img { width: 100%; height: 480px; object-fit: cover; object-position: center top; display: block; }
+    .about-img-wrap::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius); box-shadow: inset 0 -60px 80px rgba(13,27,42,0.25); }
+    .about-text p { color: #334155; margin-bottom: 20px; font-size: 1.05rem; }
+    .about-highlights { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .highlight-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; background: var(--gray); border-radius: 10px; border-left: 4px solid var(--gold); }
+    .highlight-icon { font-size: 1.3rem; flex-shrink: 0; line-height: 1.4; }
+    .highlight-text { font-size: 0.9rem; color: #334155; }
+    .highlight-text strong { color: var(--navy); display: block; margin-bottom: 2px; }
+
+    /* SERVICES */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+    .service-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 32px; box-shadow: 0 2px 16px rgba(13,27,42,0.06); transition: transform 0.25s, box-shadow 0.25s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .service-icon { font-size: 2rem; margin-bottom: 16px; }
+    .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 12px; }
+    .service-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+    .tag { background: var(--gray); color: #475569; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+
+    /* ACHIEVEMENTS */
+    .achievements { background: var(--navy); }
+    .achievements .section-label { color: var(--gold); }
+    .achievements .section-title { color: var(--white); }
+    .achievements .section-sub { color: rgba(255,255,255,0.6); }
+    .ach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; }
+    .ach-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden; transition: transform 0.25s; }
+    .ach-card:hover { transform: translateY(-4px); }
+    .ach-img { width: 100%; height: 220px; object-fit: cover; object-position: center; display: block; filter: saturate(0.9); }
+    .ach-body { padding: 24px; }
+    .ach-year { color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .ach-card h4 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.1rem; margin-bottom: 10px; line-height: 1.3; }
+    .ach-card p { color: rgba(255,255,255,0.65); font-size: 0.85rem; line-height: 1.65; }
+
+    /* TIMELINE */
+    .timeline { max-width: 800px; margin: 0 auto; }
+    .tl-item { display: grid; grid-template-columns: 120px 1fr; gap: 0 32px; margin-bottom: 48px; position: relative; }
+    .tl-item::before { content: ''; position: absolute; left: 140px; top: 10px; bottom: -48px; width: 2px; background: var(--border); }
+    .tl-item:last-child::before { display: none; }
+    .tl-date { text-align: right; padding-top: 4px; color: var(--gold2); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tl-dot { position: absolute; left: 131px; top: 8px; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 0 0 3px var(--gold); }
+    .tl-content { padding-left: 28px; }
+    .tl-content h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 4px; }
+    .tl-org { color: var(--gold2); font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
+    .tl-content p { color: var(--muted); font-size: 0.9rem; }
+
+    /* MEDIA GALLERY */
+    .media-section { background: var(--gray); }
+    .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .media-card { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(13,27,42,0.1); position: relative; }
+    .media-card img { width: 100%; height: 240px; object-fit: cover; display: block; transition: transform 0.4s; }
+    .media-card:hover img { transform: scale(1.04); }
+    .media-card.wide { grid-column: span 2; }
+    .media-card.wide img { height: 340px; }
+    .media-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(13,27,42,0.85)); padding: 20px 16px 14px; color: rgba(255,255,255,0.92); font-size: 0.8rem; font-weight: 500; }
+
+    /* SKILLS */
+    .skills-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+    .skill-group h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--navy); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--gold); }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag { background: var(--gray); color: #374151; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid var(--border); transition: all 0.2s; }
+    .skill-tag:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+    /* PROOF BANNER */
+    .proof-banner { background: var(--navy); padding: 56px 40px; position: relative; overflow: hidden; }
+    .proof-banner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%); }
+    .proof-banner-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: center; }
+    .proof-img { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .proof-img img { width: 100%; height: 340px; object-fit: cover; object-position: center top; display: block; }
+    .proof-text .section-label { color: var(--gold); }
+    .proof-text .section-title { color: var(--white); font-size: 2rem; }
+    .proof-text p { color: rgba(255,255,255,0.72); margin-bottom: 24px; font-size: 1rem; }
+    .proof-logos { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .logo-pill { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.85); padding: 8px 18px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; }
+
+    /* CONTACT */
+    .contact-section { background: linear-gradient(135deg, var(--navy) 0%, #0f2744 100%); text-align: center; padding: 100px 40px; }
+    .contact-section .section-title { color: var(--white); }
+    .contact-section .section-sub { color: rgba(255,255,255,0.65); margin: 0 auto 56px; max-width: 560px; }
+    .contact-channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 860px; margin: 0 auto 52px; }
+    .channel-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13); border-radius: var(--radius); padding: 28px 24px 24px; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: all 0.25s; position: relative; overflow: hidden; }
+    .channel-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.25s; }
+    .channel-card:hover { background: rgba(245,158,11,0.12); border-color: var(--gold); transform: translateY(-4px); }
+    .channel-card:hover::after { opacity: 1; }
+    .channel-icon { font-size: 2rem; line-height: 1; }
+    .channel-name { color: var(--white); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em; }
+    .channel-desc { color: rgba(255,255,255,0.5); font-size: 0.78rem; text-align: center; line-height: 1.5; }
+    .channel-action { margin-top: 6px; background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid rgba(245,158,11,0.35); padding: 6px 18px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
+    .channel-card:hover .channel-action { background: var(--gold); color: var(--navy); }
+    .cta-main { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); padding: 18px 48px; border-radius: 12px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: all 0.25s; box-shadow: 0 8px 32px rgba(245,158,11,0.35); }
+    .cta-main:hover { background: var(--gold2); transform: translateY(-3px); box-shadow: 0 14px 40px rgba(245,158,11,0.45); }
+    .cta-pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 8px 32px rgba(245,158,11,0.35); } 50% { box-shadow: 0 8px 52px rgba(245,158,11,0.65); } }
+    .cta-hint { color: rgba(255,255,255,0.38); font-size: 0.78rem; margin-top: 18px; }
+
+    /* FOOTER */
+    footer { background: #060e18; color: rgba(255,255,255,0.45); text-align: center; padding: 24px 40px; font-size: 0.8rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      nav { padding: 0 24px; }
+      section { padding: 64px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-wrap img { height: 300px; }
+      .tl-item { grid-template-columns: 90px 1fr; }
+      .tl-item::before { left: 105px; }
+      .tl-dot { left: 97px; }
+      .media-grid { grid-template-columns: 1fr; }
+      .media-card.wide { grid-column: span 1; }
+      .media-card.wide img, .media-card img { height: 220px; }
+      .proof-banner-inner { grid-template-columns: 1fr; }
+      .proof-img { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .stats-bar { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="brand">Felipe Salgado</div>
+    <ul>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#logros">Logros</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="lang-switch">
+      <a href="../" class="lang-btn">EN</a>
+      <span style="color:rgba(255,255,255,0.3)">|</span>
+      <a href="#" class="lang-btn active">ES</a>
+      <a href="https://wa.me/593999793094" class="cta-nav" target="_blank">Hablemos →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-badge">🌍 Disponible para proyectos globales · Quito, Ecuador</div>
+      <h1>Felipe<br><span>Salgado</span></h1>
+      <p class="subtitle">
+        Arquitecto de IA · Especialista Blockchain · Asesor Estratégico.<br>
+        Conecto tecnología exponencial con crecimiento real de negocio.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">🤖 IA &amp; Automatización</span>
+        <span class="pill">⛓️ Blockchain · Web3</span>
+        <span class="pill">🛡️ Ciberseguridad</span>
+        <span class="pill">🌱 Impacto &amp; Sostenibilidad</span>
+        <span class="pill">🏆 Mentor ETHDenver × 2</span>
+        <span class="pill">🌍 Asesor UNICEF Chile</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn-primary">🤝 Trabajemos juntos</a>
+        <a href="#logros" class="btn-secondary">Ver trayectoria →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="stat-num">8+</div><div class="stat-label">Años en Blockchain</div></div>
+      <div class="stat reveal"><div class="stat-num">20+</div><div class="stat-label">Proyectos Web3 / IA en producción</div></div>
+      <div class="stat reveal"><div class="stat-num">×2</div><div class="stat-label">Mentor ETHDenver</div></div>
+      <div class="stat reveal"><div class="stat-num">Top 5</div><div class="stat-label">Startup World Cup 2023 · SF</div></div>
+      <div class="stat reveal"><div class="stat-num">UNICEF</div><div class="stat-label">Asesor Fundraising Global</div></div>
+      <div class="stat reveal"><div class="stat-num">Forbes</div><div class="stat-label">Destacado · Edición Ecuador</div></div>
+    </div>
+  </div>
+
+  <!-- SOBRE MÍ -->
+  <section id="sobre-mi">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap reveal">
+          <img src="../images/felipe_salgado_hacker_evolution.png"
+               alt="Felipe Salgado — De hacker a Arquitecto de IA" loading="lazy" />
+        </div>
+        <div class="about-text reveal">
+          <span class="section-label">Sobre mí</span>
+          <h2 class="section-title">De la Cultura Hacker<br>a la Empresa Impulsada por IA</h2>
+          <p>
+            Soy Felipe Salgado — especialista en blockchain, arquitecto de IA y asesor estratégico
+            con más de 8 años conectando tecnología de vanguardia con resultados concretos de negocio.
+            Mi camino fue desde el comercio internacional y las ventas corporativas hasta ganar hackathons
+            en EE.UU., asesorar a UNICEF Chile y fundar la primera escuela de IA y Blockchain del Ecuador.
+          </p>
+          <p>
+            Combino profundidad técnica real — Python, machine learning, smart contracts, sistemas de IA agéntica —
+            con la mirada estratégica y comercial de quien ha liderado equipos de ventas,
+            negociado acuerdos globales y construido comunidades desde cero.
+          </p>
+          <div class="about-highlights">
+            <div class="highlight-row">
+              <span class="highlight-icon">🌍</span>
+              <div class="highlight-text">
+                <strong>UNICEF Chile — Asesor Externo</strong>
+                Diseñando estrategias de fundraising global habilitadas por tecnología: blockchain, IA y automatización.
+              </div>
+            </div>
+            <div class="highlight-row">
+              <span class="highlight-icon">🏫</span>
+              <div class="highlight-text">
+                <strong>Fundador — Vibramente</strong>
+                Primera escuela de IA y Blockchain del Ecuador, formando líderes digitales para la economía Web3.
+              </div>
+            </div>
+            <div class="highlight-row">
+              <span class="highlight-icon">📋</span>
+              <div class="highlight-text">
+                <strong>Técnico en Seguros certificado</strong>
+                Generales · Vida · Salud · Accidentes Personales — credenciales activas desde 2014.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" style="background: var(--gray);">
+    <div class="container">
+      <span class="section-label">Lo que ofrezco</span>
+      <h2 class="section-title">Tres Pilares de Valor</h2>
+      <p class="section-sub">Tanto si necesitas un co-constructor técnico, un asesor estratégico o un socio de crecimiento, aquí es donde genero mayor impacto.</p>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🤖</div>
+          <h3>Arquitectura de IA y Automatización</h3>
+          <p>Diseño e implemento sistemas de IA agéntica que automatizan pipelines de ventas, atención al cliente, procesamiento documental y flujos de compliance, reduciendo costos operativos y multiplicando la capacidad del equipo.</p>
+          <div class="service-tags"><span class="tag">Agentes IA</span><span class="tag">Python / ML</span><span class="tag">Automatización</span><span class="tag">OpenAI · Claude</span><span class="tag">Prompt Engineering</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">⛓️</div>
+          <h3>Estrategia Blockchain y Web3</h3>
+          <p>Desde la tokenización de activos reales y diseño de DAOs hasta auditorías de contratos inteligentes y DeFi — convierto la complejidad Web3 en hojas de ruta claras y ejecutables que tu organización puede lanzar de verdad.</p>
+          <div class="service-tags"><span class="tag">Tokenización (RWA)</span><span class="tag">Smart Contracts</span><span class="tag">DAOs</span><span class="tag">DeFi</span><span class="tag">Ethereum · Solana</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📈</div>
+          <h3>Crecimiento de Negocio y Asesoría</h3>
+          <p>Consultoría estratégica para empresas en transformación digital. Combino experiencia en ventas corporativas (Repsol, Imptek Chova) con ejecución startup para construir motores de crecimiento escalables.</p>
+          <div class="service-tags"><span class="tag">GTM Strategy</span><span class="tag">Fundraising</span><span class="tag">Partnerships</span><span class="tag">InsurTech</span><span class="tag">EdTech</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🛡️</div>
+          <h3>Ciberseguridad y Gestión de Riesgo</h3>
+          <p>Protección de activos digitales, auditorías de smart contracts, modelado de amenazas y protocolos de seguridad Web3 — diseñados para empresas que no pueden permitirse ser hackeadas.</p>
+          <div class="service-tags"><span class="tag">Auditoría Smart Contracts</span><span class="tag">Seguridad Web3</span><span class="tag">Threat Modeling</span><span class="tag">Privacidad &amp; Crypto</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🌱</div>
+          <h3>Tecnología de Impacto y Sostenibilidad</h3>
+          <p>Blockchain para impacto social, tokenización de activos verdes, proyectos alineados a los ODS y modelos de triple impacto. Probado con UNICEF y el proyecto UKUMARI (finalista Silicon Valley).</p>
+          <div class="service-tags"><span class="tag">ESG Technology</span><span class="tag">Finanzas Climáticas Web3</span><span class="tag">DAOs de Impacto</span><span class="tag">Alineación ODS</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🎓</div>
+          <h3>Formación y Conferencias</h3>
+          <p>Programas de educación ejecutiva, facilitación de hackathons y keynotes internacionales. Mentor en ETHDenver (2023 y 2025), speaker en World Blockchain Summit Dubai y Outer Edge LA.</p>
+          <div class="service-tags"><span class="tag">Formación Ejecutiva</span><span class="tag">Mentor Hackathons</span><span class="tag">Keynote Speaker</span><span class="tag">Diseño Curricular</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGROS -->
+  <section class="achievements" id="logros">
+    <div class="container">
+      <span class="section-label">Trayectoria</span>
+      <h2 class="section-title" style="color:white;">Prueba de Trabajo</h2>
+      <p class="section-sub">No promesas — proyectos ejecutados, escenarios globales e impacto medible.</p>
+      <div class="ach-grid">
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/b12bbef0-a459-405e-9c19-cd19a4b5c62a.jpg"
+               alt="Portada Forbes Ecuador" loading="lazy" style="object-position: center top;" />
+          <div class="ach-body">
+            <div class="ach-year">📰 Forbes Ecuador</div>
+            <h4>Destacado como Líder de Innovación y Web3</h4>
+            <p>Reconocido por Forbes Ecuador por construir AuraDogs DAO — la primera organización descentralizada del mundo para perros callejeros — llevando la innovación social Web3 a Latinoamérica.</p>
+          </div>
+        </div>
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/4b658213-a2e1-4120-9bd0-22c28e110bc2.jpg"
+               alt="World Blockchain Summit Dubai Speaker" loading="lazy" />
+          <div class="ach-body">
+            <div class="ach-year">🎤 2022 · Dubái, EAU</div>
+            <h4>Speaker — World Blockchain Summit</h4>
+            <p>Ponente oficial en uno de los eventos blockchain más prestigiosos del mundo, llevando la narrativa de innovación latinoamericana a un escenario global.</p>
+          </div>
+        </div>
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/189cb2f9-f885-4137-960d-d551092dd740.jpg"
+               alt="Panel NFT Utility Outer Edge LA" loading="lazy" />
+          <div class="ach-body">
+            <div class="ach-year">🎙️ 2022 · Los Ángeles, EE.UU.</div>
+            <h4>Panelista — Outer Edge | LA (NFT LA)</h4>
+            <p>Panel "NFT Utility" junto a fundadores de HiFi, Lucky Ducky y Mintangible — la convergencia de NFTs, finanzas y propiedad comunitaria.</p>
+          </div>
+        </div>
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/54f2611c-b0b6-4cd5-b00b-19ed32f3efa3.jpg"
+               alt="Asesor Tecnológico Eugenio Derbez" loading="lazy" />
+          <div class="ach-body">
+            <div class="ach-year">🎬 2019 — 2021</div>
+            <h4>Asesor Tecnológico — Eugenio Derbez</h4>
+            <p>Asesoría de tecnología y estrategia digital para el reconocido actor y productor internacional, conectando la industria del entretenimiento con la tecnología emergente.</p>
+          </div>
+        </div>
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/41a0b47b-c470-4c8e-9ddb-b4324a849cab.jpg"
+               alt="Hackathon Winner AuraDogs DAO" loading="lazy" />
+          <div class="ach-body">
+            <div class="ach-year">🏆 2022 · Hackathon EE.UU.</div>
+            <h4>Ganador — AuraDogs DAO · Hackathon USA</h4>
+            <p>Primer lugar con AuraDogs — la primera DAO del mundo para animales callejeros. Financiamiento social descentralizado vía blockchain con reconocimiento internacional.</p>
+          </div>
+        </div>
+
+        <div class="ach-card reveal">
+          <img class="ach-img" src="../images/3b122587-8f06-45f0-ad20-81019afc9027.jpg"
+               alt="Finalista Startup World Cup Silicon Valley" loading="lazy"
+               style="object-position: center 30%;" />
+          <div class="ach-body">
+            <div class="ach-year">🌉 2023 · San Francisco, EE.UU.</div>
+            <h4>Finalista — Startup World Cup · Silicon Valley</h4>
+            <p>El proyecto UKUMARI (impacto + Web3 + sostenibilidad) fue seleccionado como finalista en la competencia de startups más exigente del mundo, representando al Ecuador.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+    <div class="container">
+      <span class="section-label">Experiencia</span>
+      <h2 class="section-title">Trayectoria Profesional</h2>
+      <p class="section-sub">De la energía multinacional a Silicon Valley — una década construyendo en la frontera tecnológica.</p>
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2025 – Hoy</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Asesor Externo y Capacitador Internacional</h4>
+            <div class="tl-org">🌍 UNICEF Chile — Programas Globales</div>
+            <p>Desarrollo de estrategias de fundraising global habilitadas por tecnología, aplicando blockchain, Python, IA y automatización a la misión humanitaria de UNICEF para innovar en mecanismos de recaudación internacional.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2025 – Hoy</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Fundador y CEO</h4>
+            <div class="tl-org">⚡ Vibramente — Primera Escuela IA/Blockchain del Ecuador</div>
+            <p>Fundé y lidero la primera institución educativa del Ecuador especializada en tecnología emergente — IA, blockchain y Web3 — formando a la próxima generación de emprendedores digitales.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2021 – Hoy</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Director de Tecnología, Innovación y Emprendimiento</h4>
+            <div class="tl-org">🏫 Eight Academy</div>
+            <p>Liderazgo de estrategia de innovación y hackathons estudiantiles que exponen a la nueva generación a desafíos tecnológicos del mundo real.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2020 – Hoy</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Asesor Privado — Blockchain, Web3, IA y Ciberseguridad</h4>
+            <div class="tl-org">🔗 Independiente · Empresas e Instituciones</div>
+            <p>Asesoría de cabecera para organizaciones que quieren adaptarse a los cambios tecnológicos globales. Especialidades: tokenización de activos reales, NFTs, DeFi, agentes de IA, ciberseguridad. +20 proyectos entregados.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2023 y 2025</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Mentor de Hackers × 2</h4>
+            <div class="tl-org">🔷 ETHDenver — Denver, EE.UU.</div>
+            <p>Mentor seleccionado en el hackathon de Ethereum más grande del mundo — guiando equipos internacionales en DeFi, DAOs, smart contracts y desarrollo de productos Web3.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2019 – 2021</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Asesor Tecnológico</h4>
+            <div class="tl-org">🎬 Eugenio Derbez (Actor y Productor)</div>
+            <p>Consultoría en proyectos tecnológicos y estrategia digital para proyectos de la industria del entretenimiento internacional.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2017 – 2021</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Gerente de Comercio Exterior</h4>
+            <div class="tl-org">ATU Ecuador</div>
+            <p>Operaciones internacionales, logística global y desarrollo de estrategia de mercado.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2014 – 2017</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Jefe de Exportaciones</h4>
+            <div class="tl-org">Imptek Chova del Ecuador</div>
+            <p>Desarrollo de mercados internacionales en América Latina y negociaciones estratégicas de exportación.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">2011 – 2014</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <h4>Jefe Comercial</h4>
+            <div class="tl-org">Repsol Ecuador (Energía Multinacional)</div>
+            <p>Dirección comercial en el sector energético — gestión de cartera corporativa y liderazgo de operaciones estratégicas de ventas.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="media-section" id="galeria">
+    <div class="container">
+      <span class="section-label">En Acción</span>
+      <h2 class="section-title">Escenarios Globales y Proyectos Reales</h2>
+      <p class="section-sub">De Dubái y Los Ángeles a Quito y San Francisco — prueba capturada.</p>
+      <div class="media-grid">
+        <div class="media-card wide reveal">
+          <img src="../images/a9d5a7cb-a88b-4beb-b6ff-fb3582487527.jpg"
+               alt="Proyección nocturna AuraDogs Quito Web3"
+               style="object-position: center 40%;" loading="lazy" />
+          <div class="media-caption">"The First Animal Movement" — Proyección nocturna de AuraDogs DAO en Quito, llevando Web3 al espacio público</div>
+        </div>
+        <div class="media-card reveal">
+          <img src="../images/24344601-ced4-43d9-a4e1-6974ba4e54a9.jpg"
+               alt="Networking Web3 builders globales" loading="lazy" />
+          <div class="media-caption">Networking con builders globales — circuito Blockchain Jungle &amp; ETHDenver</div>
+        </div>
+        <div class="media-card reveal">
+          <img src="../images/0a634a5b-6d3d-4624-948f-76c7eaa3d213.jpg"
+               alt="Trail running liderazgo Felipe Salgado" loading="lazy"
+               style="object-position: center 30%;" />
+          <div class="media-caption">La misma disciplina aplicada a cada proyecto — mentalidad de trail y liderazgo</div>
+        </div>
+        <div class="media-card reveal">
+          <img src="../images/d519e070-9317-485c-94fb-9cb0ede2e1d1.jpg"
+               alt="Mentoría juvenil blockchain" loading="lazy" />
+          <div class="media-caption">Mentorando a la próxima generación de builders — cultura hacker desde el principio</div>
+        </div>
+        <div class="media-card wide reveal">
+          <img src="../images/312b3e74-3c2f-4222-92e1-8eb8727450ea.jpg"
+               alt="Forbes Vibramente Ukumari" loading="lazy" />
+          <div class="media-caption">Vibramente &amp; UKUMARI — Tecnología + sostenibilidad como narrativa global · Forbes Ecuador</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="habilidades">
+    <div class="container">
+      <span class="section-label">Expertise</span>
+      <h2 class="section-title">Stack Técnico y Estratégico</h2>
+      <p class="section-sub">Más de ocho años de ejecución real en blockchain, IA y negocios internacionales.</p>
+      <div class="skills-columns reveal">
+        <div class="skill-group">
+          <h4>⛓️ Blockchain y Web3</h4>
+          <div class="skill-list">
+            <span class="skill-tag">8+ Años de Experiencia</span>
+            <span class="skill-tag">Ethereum · Solana · Polygon</span>
+            <span class="skill-tag">Smart Contracts</span>
+            <span class="skill-tag">Tokenización (RWA)</span>
+            <span class="skill-tag">DAOs</span>
+            <span class="skill-tag">DeFi</span>
+            <span class="skill-tag">Colecciones NFT</span>
+            <span class="skill-tag">Tokenomics</span>
+            <span class="skill-tag">Crypto Strategy</span>
+            <span class="skill-tag">+20 Proyectos</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>🤖 IA y Desarrollo</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Agentes de IA</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Machine Learning</span>
+            <span class="skill-tag">Web Scraping / Bots</span>
+            <span class="skill-tag">Pipelines de Automatización</span>
+            <span class="skill-tag">Prompt Engineering</span>
+            <span class="skill-tag">OpenAI · Claude · Gemini</span>
+            <span class="skill-tag">APIs e Integraciones</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>🛡️ Ciberseguridad</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Auditoría Smart Contracts</span>
+            <span class="skill-tag">Protocolos Seguridad Web3</span>
+            <span class="skill-tag">Gestión de Riesgo Digital</span>
+            <span class="skill-tag">Threat Modeling</span>
+            <span class="skill-tag">Protección Activos Digitales</span>
+            <span class="skill-tag">Criptografía y Privacidad</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>📈 Negocio y Estrategia</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Ing. Negocios Internacionales</span>
+            <span class="skill-tag">GTM Strategy</span>
+            <span class="skill-tag">Comercio Exterior</span>
+            <span class="skill-tag">Fundraising Internacional</span>
+            <span class="skill-tag">Modelos Negocio Web3</span>
+            <span class="skill-tag">Ecosistema Startup</span>
+            <span class="skill-tag">Asesoría Ejecutiva</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>🌱 Impacto y Sostenibilidad</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Alineación ODS</span>
+            <span class="skill-tag">Blockchain para Impacto Social</span>
+            <span class="skill-tag">Finanzas Climáticas Web3</span>
+            <span class="skill-tag">DAOs de Impacto</span>
+            <span class="skill-tag">ESG Technology</span>
+            <span class="skill-tag">Modelos de Triple Impacto</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h4>📋 Seguros e InsurTech</h4>
+          <div class="skill-list">
+            <span class="skill-tag">Técnico en Seguros (2014)</span>
+            <span class="skill-tag">Seguros Generales</span>
+            <span class="skill-tag">Vida Individual y Colectiva</span>
+            <span class="skill-tag">Salud y Hospitalización</span>
+            <span class="skill-tag">Accidentes Personales</span>
+            <span class="skill-tag">InsurTech y DeFi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BANNER -->
+  <div class="proof-banner">
+    <div class="proof-banner-inner">
+      <div class="proof-img">
+        <img src="../images/57442e44-a016-446a-a48d-5805093bbd35.jpg"
+             alt="Felipe Salgado profesional"
+             style="object-position: center top;" loading="lazy" />
+      </div>
+      <div class="proof-text">
+        <span class="section-label">Presencia Global</span>
+        <h2 class="section-title">Construido en Ecuador.<br>Reconocido en el Mundo.</h2>
+        <p>De Quito a Silicon Valley — mi trabajo ha sido validado en los escenarios internacionales más competitivos. Ya sea un hackathon en Denver, un panel en Los Ángeles o una cumbre en Dubái, llevo la innovación latinoamericana a la conversación global.</p>
+        <div class="proof-logos">
+          <span class="logo-pill">🌍 UNICEF Chile</span>
+          <span class="logo-pill">🔷 ETHDenver × 2</span>
+          <span class="logo-pill">🌉 Startup World Cup SF</span>
+          <span class="logo-pill">🎤 World Blockchain Summit</span>
+          <span class="logo-pill">🎙️ Outer Edge LA</span>
+          <span class="logo-pill">📰 Forbes Ecuador</span>
+          <span class="logo-pill">🎬 Eugenio Derbez</span>
+          <span class="logo-pill">⛰️ Eight Academy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACTO -->
+  <section class="contact-section" id="contacto">
+    <div class="container">
+      <span class="section-label" style="color:var(--gold);">Trabajemos Juntos</span>
+      <h2 class="section-title">¿Tienes un Proyecto que<br>Cambia el Mundo?</h2>
+      <p class="section-sub">
+        Blockchain, IA, ciberseguridad, sostenibilidad, ODS — si tiene impacto real y visión global, hablemos.
+        Disponible para asesorías, partnerships, keynotes y proyectos de co-construcción.
+      </p>
+
+      <div class="contact-channels">
+        <a href="https://wa.me/593999793094?text=Hola%20Felipe!%20Visit%C3%A9%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20conectar."
+           class="channel-card" target="_blank">
+          <div class="channel-icon">📱</div>
+          <div class="channel-name">WhatsApp</div>
+          <div class="channel-desc">Respuesta más rápida.<br>Línea directa, sin filtros.</div>
+          <span class="channel-action">Escribir ahora</span>
+        </a>
+        <a href="https://linkedin.com/in/felipesalgado"
+           class="channel-card" target="_blank">
+          <div class="channel-icon">💼</div>
+          <div class="channel-name">LinkedIn</div>
+          <div class="channel-desc">Conecta profesionalmente.<br>Historial completo.</div>
+          <span class="channel-action">Conectar</span>
+        </a>
+        <a href="mailto:contacto@felipesalgado.com"
+           class="channel-card">
+          <div class="channel-icon">✉️</div>
+          <div class="channel-name">Email</div>
+          <div class="channel-desc">Para propuestas formales<br>y briefings detallados.</div>
+          <span class="channel-action">Enviar email</span>
+        </a>
+        <a href="../"
+           class="channel-card">
+          <div class="channel-icon">🌐</div>
+          <div class="channel-name">Portfolio EN</div>
+          <div class="channel-desc">Versión completa<br>en inglés.</div>
+          <span class="channel-action">Ver →</span>
+        </a>
+      </div>
+
+      <a href="https://wa.me/593999793094?text=Hola%20Felipe!%20Visit%C3%A9%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20conectar."
+         class="cta-main cta-pulse" target="_blank">
+        💬 Iniciar la Conversación →
+      </a>
+      <p class="cta-hint">Responde en pocas horas · Quito, Ecuador (GMT−5)</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 · Felipe Salgado Ramos · <a href="mailto:contacto@felipesalgado.com">contacto@felipesalgado.com</a> · Quito, Ecuador</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

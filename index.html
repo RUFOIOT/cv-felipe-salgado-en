@@ -55,6 +55,10 @@
       text-transform: uppercase; transition: color 0.2s;
     }
     nav ul li a:hover { color: var(--gold); }
+    nav .lang-switch { display: flex; align-items: center; gap: 12px; }
+    nav .lang-btn { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    nav .lang-btn:hover { color: var(--gold); }
+    nav .lang-btn.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
     nav .cta-nav {
       background: var(--gold); color: var(--navy);
       padding: 8px 20px; border-radius: 8px;
@@ -503,7 +507,12 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="https://wa.me/593999793094" class="cta-nav" target="_blank">Let's Talk →</a>
+    <div class="lang-switch">
+      <a href="#" class="lang-btn active">EN</a>
+      <span style="color:rgba(255,255,255,0.3)">|</span>
+      <a href="es/" class="lang-btn">ES</a>
+      <a href="https://wa.me/593999793094" class="cta-nav" target="_blank">Let's Talk →</a>
+    </div>
   </nav>
 
   <!-- HERO -->
