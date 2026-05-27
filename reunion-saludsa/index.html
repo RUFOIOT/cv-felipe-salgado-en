@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Propuesta de Implementación · Agencia de Bolsillo IA · Saludsa 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
+
+    :root {
+      --navy:   #0D1B2A;
+      --red:    #C0392B;
+      --red2:   #922B21;
+      --gold:   #F59E0B;
+      --green:  #059669;
+      --white:  #FFFFFF;
+      --gray:   #F1F5F9;
+      --light:  #EFF6FF;
+      --muted:  #64748B;
+      --border: #E2E8F0;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(13,27,42,0.10);
+      --nvidia: #76b900;
+    }
+
+    /* ── PORTADA ──────────────────────────────────────────── */
+    .cover {
+      background: linear-gradient(145deg, var(--navy) 0%, #1a3353 60%, #0d2b44 100%);
+      color: var(--white);
+      padding: 72px 64px 60px;
+      min-height: 340px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(192,57,43,0.22) 0%, transparent 65%);
+    }
+    .cover::after {
+      content: '';
+      position: absolute; bottom: -40px; left: 200px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(118,185,0,0.12) 0%, transparent 65%);
+    }
+    .cover-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+    .cover-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(192,57,43,0.25); border: 1px solid rgba(192,57,43,0.5);
+      color: #f1948a; border-radius: 50px;
+      padding: 5px 16px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .cover-date { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .cover h1 span { color: var(--gold); }
+    .cover-sub { color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 700px; margin-bottom: 44px; }
+    .cover-stats {
+      display: flex; gap: 36px; flex-wrap: wrap;
+      padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .cs { text-align: center; }
+    .cs-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .cs-lbl { color: rgba(255,255,255,0.6); font-size: 0.72rem; letter-spacing: 0.06em; margin-top: 4px; }
+
+    /* ── LAYOUT ───────────────────────────────────────────── */
+    .page { max-width: 1060px; margin: 0 auto; padding: 0 40px 80px; }
+    .section { margin-top: 72px; }
+    .section-label { display: inline-block; color: var(--red); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: var(--navy); line-height: 1.15; margin-bottom: 10px; }
+    .section-sub { color: var(--muted); font-size: 0.95rem; max-width: 680px; margin-bottom: 36px; }
+    .divider { height: 1px; background: var(--border); margin: 48px 0; }
+
+    /* ── CARDS GRID ───────────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+      box-shadow: var(--shadow);
+    }
+    .card-accent { border-top: 4px solid var(--red); }
+    .card-gold { border-top: 4px solid var(--gold); }
+    .card-green { border-top: 4px solid var(--green); }
+    .card-nvidia { border-top: 4px solid var(--nvidia); }
+
+    /* ── ROI BANNER ───────────────────────────────────────── */
+    .roi-banner {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-top: 36px;
+    }
+    .roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 20px; }
+    .roi-stat { text-align: center; }
+    .roi-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .roi-lbl { color: rgba(255,255,255,0.6); font-size: 0.72rem; letter-spacing: 0.05em; margin-top: 6px; }
+
+    /* ── PERFIL ───────────────────────────────────────────── */
+    .perfil-grid { display: grid; grid-template-columns: 280px 1fr; gap: 36px; align-items: start; }
+    .perfil-card {
+      background: var(--navy); border-radius: var(--radius);
+      padding: 32px 24px; text-align: center; color: var(--white);
+    }
+    .perfil-avatar {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red) 0%, var(--gold) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.8rem; margin: 0 auto 16px;
+    }
+    .perfil-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; margin-bottom: 6px; }
+    .perfil-role { color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 20px; }
+    .perfil-badges { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .pbadge { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); padding: 4px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; }
+    .perfil-right p { color: #334155; font-size: 0.93rem; margin-bottom: 14px; }
+    .hitos { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .hito { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; background: var(--gray); border-radius: 8px; border-left: 3px solid var(--gold); }
+    .hito-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1.5; }
+    .hito-text { font-size: 0.83rem; color: #334155; }
+    .hito-text strong { color: var(--navy); display: block; margin-bottom: 2px; font-size: 0.85rem; }
+
+    /* ── AGENTES ──────────────────────────────────────────── */
+    .agent-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+    .agent-card.pep { border-top: 5px solid #3b82f6; }
+    .agent-card.zizu { border-top: 5px solid #8b5cf6; }
+    .agent-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .agent-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 4px; }
+    .agent-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .agent-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .agent-features li { display: flex; gap: 10px; font-size: 0.85rem; color: #334155; }
+    .agent-features li::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+    /* ── STACK NVIDIA ─────────────────────────────────────── */
+    .stack-layer {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 12px; overflow: hidden;
+    }
+    .stack-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px;
+      background: var(--gray);
+      border-bottom: 1px solid var(--border);
+    }
+    .stack-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--navy); color: var(--gold);
+      font-size: 0.78rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .stack-header-text h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .stack-header-text span { font-size: 0.75rem; color: var(--muted); }
+    .stack-badge-nvidia {
+      margin-left: auto;
+      background: rgba(118,185,0,0.15); border: 1px solid rgba(118,185,0,0.35);
+      color: var(--nvidia); padding: 3px 10px; border-radius: 50px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .stack-body { padding: 16px 20px; }
+    .stack-components { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sc {
+      background: var(--white); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600; color: #334155;
+    }
+    .sc.nvidia { background: rgba(118,185,0,0.08); border-color: rgba(118,185,0,0.3); color: #4a7a00; }
+    .sc.highlight { background: rgba(13,27,42,0.06); border-color: rgba(13,27,42,0.2); color: var(--navy); }
+
+    /* ── SEGURIDAD ────────────────────────────────────────── */
+    .sec-grid { display: flex; flex-direction: column; gap: 10px; }
+    .sec-row {
+      display: grid; grid-template-columns: 44px 1fr auto;
+      gap: 16px; align-items: center;
+      padding: 14px 18px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .sec-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--navy); color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sec-info h4 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .sec-info p { font-size: 0.78rem; color: var(--muted); }
+    .sec-status {
+      background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3);
+      color: var(--green); padding: 4px 10px; border-radius: 50px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .sec-status.nvidia { background: rgba(118,185,0,0.1); border-color: rgba(118,185,0,0.3); color: var(--nvidia); }
+
+    /* ── COSTOS ───────────────────────────────────────────── */
+    .cost-table { width: 100%; border-collapse: collapse; }
+    .cost-table th {
+      background: var(--navy); color: var(--white);
+      padding: 12px 16px; text-align: left;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .cost-table th:last-child { text-align: right; }
+    .cost-table td {
+      padding: 13px 16px; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; color: #334155;
+      vertical-align: top;
+    }
+    .cost-table td:last-child { text-align: right; font-weight: 700; color: var(--navy); }
+    .cost-table tr:hover td { background: var(--gray); }
+    .cost-table .subtotal td { background: var(--light); font-weight: 700; color: var(--navy); border-top: 2px solid var(--border); }
+    .cost-table .total td { background: var(--navy); color: var(--white); font-weight: 800; font-size: 0.95rem; }
+    .cost-table .total td:last-child { color: var(--gold); font-size: 1.05rem; }
+    .cost-note { font-size: 0.75rem; color: var(--muted); margin-top: 10px; font-style: italic; }
+    .cost-phase { color: var(--red2); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+    /* ── CRONOGRAMA ───────────────────────────────────────── */
+    .crono-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+    .crono-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-align: center; padding: 6px 2px; }
+    .crono-cell { border-radius: 6px; padding: 10px 6px; text-align: center; font-size: 0.68rem; font-weight: 600; }
+    .crono-cell.setup { background: rgba(59,130,246,0.15); color: #1d4ed8; }
+    .crono-cell.integ { background: rgba(139,92,246,0.15); color: #6d28d9; }
+    .crono-cell.testing { background: rgba(245,158,11,0.15); color: #92400e; }
+    .crono-cell.train { background: rgba(118,185,0,0.15); color: #3a5a00; }
+    .crono-cell.piloto { background: rgba(5,150,105,0.15); color: #065f46; }
+    .crono-cell.go { background: var(--green); color: var(--white); font-weight: 800; }
+    .crono-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; }
+    .cl { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); }
+    .cl-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* ── ENTREGABLES ──────────────────────────────────────── */
+    .entregable-list { display: flex; flex-direction: column; gap: 8px; }
+    .entregable {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px; background: var(--white);
+      border: 1px solid var(--border); border-radius: 8px;
+    }
+    .entregable-check { color: var(--green); font-size: 1rem; flex-shrink: 0; }
+    .entregable span { font-size: 0.87rem; color: #334155; }
+    .entregable-phase { margin-left: auto; font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── FLUJO ────────────────────────────────────────────── */
+    .flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin: 28px 0; }
+    .flow-step {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      flex: 1; min-width: 80px; padding: 14px 8px;
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+      text-align: center; margin: 2px;
+    }
+    .flow-step .ficon { font-size: 1.5rem; }
+    .flow-step .fnum { font-size: 0.65rem; color: var(--muted); font-weight: 700; letter-spacing: 0.06em; }
+    .flow-step .ftxt { font-size: 0.72rem; color: var(--navy); font-weight: 600; }
+    .flow-arrow { color: var(--gold); font-size: 1.2rem; padding: 0 2px; flex-shrink: 0; }
+
+    /* ── CONDICIONES ──────────────────────────────────────── */
+    .condiciones { background: var(--light); border: 1px solid #bfdbfe; border-radius: var(--radius); padding: 28px 32px; }
+    .condiciones h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }
+    .cond-list { display: flex; flex-direction: column; gap: 8px; }
+    .cond-item { display: flex; gap: 10px; font-size: 0.85rem; color: #334155; }
+    .cond-item::before { content: '·'; color: var(--gold); font-weight: 900; font-size: 1.2rem; flex-shrink: 0; line-height: 1.4; }
+
+    /* ── FIRMA ────────────────────────────────────────────── */
+    .firma-section {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 44px 40px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
+      margin-top: 56px;
+    }
+    .firma-text .section-label { color: rgba(245,158,11,0.8); }
+    .firma-text .section-title { color: var(--white); font-size: 1.8rem; }
+    .firma-text p { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-top: 12px; }
+    .firma-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 28px 24px;
+    }
+    .firma-line { border-bottom: 1px solid rgba(255,255,255,0.25); padding-bottom: 10px; margin-bottom: 14px; }
+    .firma-lbl { color: rgba(255,255,255,0.45); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .firma-val { color: var(--white); font-size: 0.9rem; font-weight: 600; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer { background: #060e18; color: rgba(255,255,255,0.4); text-align: center; padding: 20px 40px; font-size: 0.75rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── PRINT ────────────────────────────────────────────── */
+    @media print {
+      .cover { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .section { page-break-inside: avoid; }
+    }
+
+    @media (max-width: 768px) {
+      .cover { padding: 40px 24px; }
+      .page { padding: 0 20px 60px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .perfil-grid { grid-template-columns: 1fr; }
+      .firma-section { grid-template-columns: 1fr; }
+      .crono-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ PORTADA ══════════════════ -->
+<div class="cover">
+  <div class="cover-meta">
+    <span class="cover-badge">⚕ Confidencial · Saludsa 2026</span>
+    <span class="cover-date">Reunión: 27 de mayo de 2026</span>
+  </div>
+  <h1>Propuesta de Implementación<br><span>Agencia de Marketing de Bolsillo IA</span></h1>
+  <p class="cover-sub">
+    Documento técnico-comercial para la reunión de aprobación e inicio de implementación del sistema de agentes
+    <strong style="color:var(--white)">Pep &amp; Zizu</strong> sobre infraestructura <strong style="color:#76b900">NVIDIA AI Enterprise</strong>.
+  </p>
+  <div class="cover-stats">
+    <div class="cs"><div class="cs-num">71x</div><div class="cs-lbl">ROI conservador</div></div>
+    <div class="cs"><div class="cs-num">$5.47M</div><div class="cs-lbl">Ingreso anual</div></div>
+    <div class="cs"><div class="cs-num">5 días</div><div class="cs-lbl">Payback</div></div>
+    <div class="cs"><div class="cs-num">11 sem.</div><div class="cs-lbl">Al aire</div></div>
+    <div class="cs"><div class="cs-num">400</div><div class="cs-lbl">RNs Saludsa</div></div>
+    <div class="cs"><div class="cs-num">7</div><div class="cs-lbl">Capas de seguridad</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════ PÁGINA ══════════════════ -->
+<div class="page">
+
+  <!-- ── 1. RESUMEN EJECUTIVO ── -->
+  <div class="section" id="resumen">
+    <span class="section-label">01 · Resumen Ejecutivo</span>
+    <h2 class="section-title">El problema y la solución en una página.</h2>
+    <p class="section-sub">La fuerza comercial de Saludsa tiene el potencial digital sin activar. Este sistema lo activa.</p>
+
+    <div class="grid-2">
+      <div class="card card-accent">
+        <div style="font-size:1.5rem;margin-bottom:12px;">❌</div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:10px;">Hoy — Sin el Sistema</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--red);font-weight:700;">·</span>Solo <strong>60 de 400 RNs</strong> (15%) pautan en digital</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--red);font-weight:700;">·</span><strong>5–6 horas/semana</strong> gestionando Meta Ads manualmente</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--red);font-weight:700;">·</span>CPL promedio: <strong>$3.75</strong> — ineficiente</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--red);font-weight:700;">·</span>~960 leads/mes · ~77 ventas atribuidas</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--red);font-weight:700;">·</span>Creatividades sin estándar de marca</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <div style="font-size:1.5rem;margin-bottom:12px;">✅</div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:10px;">Con Pep &amp; Zizu — Meta 40%</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--green);font-weight:700;">·</span><strong>160 de 400 RNs</strong> (40%) activos en digital</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--green);font-weight:700;">·</span><strong>20 minutos/semana</strong> — el RN vuelve a vender</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--green);font-weight:700;">·</span>CPL optimizado: <strong>~$1.80</strong> (−52%)</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--green);font-weight:700;">·</span>2,000 leads nuevos/mes · 400 clientes/mes</li>
+          <li style="font-size:0.85rem;color:#334155;display:flex;gap:8px;"><span style="color:var(--green);font-weight:700;">·</span>A/B automático · CTR estimado +60%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roi-banner">
+      <div class="roi-grid">
+        <div class="roi-stat"><div class="roi-num">+100</div><div class="roi-lbl">RNs nuevos en digital</div></div>
+        <div class="roi-stat"><div class="roi-num">2,000</div><div class="roi-lbl">Leads nuevos / mes</div></div>
+        <div class="roi-stat"><div class="roi-num">+400</div><div class="roi-lbl">Clientes nuevos / mes</div></div>
+        <div class="roi-stat"><div class="roi-num">$5.47M</div><div class="roi-lbl">Ingreso anual</div></div>
+        <div class="roi-stat"><div class="roi-num">$1.09M</div><div class="roi-lbl">Beneficio neto año 1 (20%)</div></div>
+        <div class="roi-stat"><div class="roi-num">71x</div><div class="roi-lbl">ROI conservador</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 2. PERFIL DEL CONSULTOR ── -->
+  <div class="section" id="perfil">
+    <span class="section-label">02 · Perfil del Consultor</span>
+    <h2 class="section-title">Quién diseña e implementa el sistema.</h2>
+    <p class="section-sub">Experiencia real en IA agéntica, automatización comercial y el sector asegurador.</p>
+
+    <div class="perfil-grid">
+      <div class="perfil-card">
+        <div class="perfil-avatar">🧠</div>
+        <div class="perfil-name">Felipe Salgado</div>
+        <div class="perfil-role">Arquitecto de IA · Especialista Blockchain<br>Asesor Estratégico</div>
+        <div class="perfil-badges">
+          <span class="pbadge">🤖 IA Agéntica</span>
+          <span class="pbadge">⛓️ Blockchain 8+ años</span>
+          <span class="pbadge">🛡️ Ciberseguridad</span>
+          <span class="pbadge">🌍 UNICEF Chile</span>
+          <span class="pbadge">🏆 ETHDenver ×2</span>
+          <span class="pbadge">📋 Técnico en Seguros</span>
+          <span class="pbadge">📰 Forbes Ecuador</span>
+          <span class="pbadge">🌉 Silicon Valley 2023</span>
+        </div>
+      </div>
+      <div class="perfil-right">
+        <p>
+          Arquitecto de sistemas de IA agéntica con más de 8 años ejecutando proyectos en el cruce entre
+          tecnología exponencial y negocio real. Combina profundidad técnica —Python, machine learning,
+          pipelines de automatización, orquestación agéntica sobre NVIDIA Enterprise— con visión comercial
+          y estratégica forjada en Repsol, Imptek Chova y como fundador de Vibramente.
+        </p>
+        <p>
+          <strong>Relevancia directa para Saludsa:</strong> Técnico en Seguros certificado (2014) con conocimiento
+          profundo de los ramos Generales, Vida y Salud. Entiende el negocio desde adentro — productos,
+          perfiles de riesgo, regulación SBS y la lógica comercial de una fuerza de RNs.
+        </p>
+        <div class="hitos">
+          <div class="hito">
+            <span class="hito-icon">🌍</span>
+            <div class="hito-text">
+              <strong>Asesor Externo — UNICEF Chile</strong>
+              Diseño de estrategias de fundraising global con IA, automatización y blockchain aplicados a misión institucional.
+            </div>
+          </div>
+          <div class="hito">
+            <span class="hito-icon">🏆</span>
+            <div class="hito-text">
+              <strong>Mentor ETHDenver × 2 (2023 y 2025)</strong>
+              El hackathon de Ethereum más grande del mundo — guiando equipos internacionales en arquitectura de agentes.
+            </div>
+          </div>
+          <div class="hito">
+            <span class="hito-icon">🌉</span>
+            <div class="hito-text">
+              <strong>Finalista Startup World Cup 2023 · Silicon Valley</strong>
+              Proyecto UKUMARI seleccionado entre los mejores del mundo en la competencia más exigente de startups.
+            </div>
+          </div>
+          <div class="hito">
+            <span class="hito-icon">🏫</span>
+            <div class="hito-text">
+              <strong>Fundador — Vibramente</strong>
+              Primera escuela de IA y Blockchain del Ecuador. Diseño curricular y formación ejecutiva en tecnología emergente.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 3. EL SISTEMA: PEP & ZIZU ── -->
+  <div class="section" id="sistema">
+    <span class="section-label">03 · El Sistema</span>
+    <h2 class="section-title">Pep &amp; Zizu: la agencia dentro del bolsillo.</h2>
+    <p class="section-sub">Dos agentes de IA especializados que convierten a cualquier RN en un experto de marketing digital. Sin agencia externa. Sin curva de aprendizaje.</p>
+
+    <!-- Flujo -->
+    <div class="flow">
+      <div class="flow-step"><span class="ficon">💬</span><span class="fnum">PASO 1</span><span class="ftxt">Idea en lenguaje natural</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="ficon">🎤</span><span class="fnum">PASO 2</span><span class="ftxt">Voz o texto (Telegram)</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="ficon">🧠</span><span class="fnum">PASO 3</span><span class="ftxt">Pep construye la campaña</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="ficon">🎨</span><span class="fnum">PASO 4</span><span class="ftxt">Zizu crea los artes</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="ficon">👁</span><span class="fnum">PASO 5</span><span class="ftxt">Preview al RN</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step"><span class="ficon">✅</span><span class="fnum">PASO 6</span><span class="ftxt">El RN aprueba</span></div>
+      <div class="flow-arrow">›</div>
+      <div class="flow-step" style="background:var(--navy);border-color:var(--navy);"><span class="ficon">🚀</span><span class="fnum" style="color:rgba(255,255,255,0.6);">PASO 7</span><span class="ftxt" style="color:var(--gold);font-weight:800;">Live en Meta</span></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="agent-card pep">
+        <div class="agent-icon">🧠</div>
+        <div class="agent-name">Pep · El Estratega</div>
+        <div class="agent-tag">Arquitecto de campañas · Meta Ads</div>
+        <ul class="agent-features">
+          <li>Interpreta briefs en lenguaje natural y voz</li>
+          <li>Configura audiencias con precisión de experto (lookalike, intereses, exclusiones)</li>
+          <li>Define objetivo, presupuesto, duración y formatos</li>
+          <li>Monitorea métricas y pausa anuncios de bajo rendimiento</li>
+          <li>Aprendizaje continuo entre campañas</li>
+          <li><strong>−94% tiempo en gestión de pauta por RN</strong></li>
+        </ul>
+      </div>
+      <div class="agent-card zizu">
+        <div class="agent-icon">🎨</div>
+        <div class="agent-name">Zizu · El Creativo</div>
+        <div class="agent-tag">Arte &amp; Copy · A/B automático</div>
+        <ul class="agent-features">
+          <li>Genera imágenes para feed, stories y reels alineadas a brand Saludsa</li>
+          <li>Redacta copies persuasivos por producto, audiencia y objetivo</li>
+          <li>A/B testing automático: mínimo 2 variantes por campaña</li>
+          <li>Iteración instantánea sin rondas de revisión</li>
+          <li>Ningún costo adicional de diseño ni copywriting</li>
+          <li><strong>CTR estimado +60% vs. creatividades actuales</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 4. STACK TECNOLÓGICO ── -->
+  <div class="section" id="stack">
+    <span class="section-label">04 · Stack Tecnológico</span>
+    <h2 class="section-title">Arquitectura sobre NVIDIA AI Enterprise.</h2>
+    <p class="section-sub">
+      El framework de orquestación agéntica se implementa sobre <strong>NVIDIA AI Enterprise</strong> —
+      la plataforma de grado empresarial que garantiza seguridad, soporte certificado, cumplimiento regulatorio
+      y rendimiento de inferencia de nivel productivo.
+    </p>
+
+    <!-- Capa NVIDIA destacada -->
+    <div class="card card-nvidia" style="margin-bottom:20px;background:rgba(118,185,0,0.04);">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+        <div style="font-size:1.8rem;">⚡</div>
+        <div>
+          <h4 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);">NVIDIA AI Enterprise — Framework Central</h4>
+          <p style="font-size:0.8rem;color:var(--muted);margin-top:2px;">Plataforma de software empresarial para IA en producción · Soporte 24/7 · ISO 27001 · SOC 2 Type II</p>
+        </div>
+        <div class="stack-badge-nvidia" style="margin-left:auto;">Enterprise</div>
+      </div>
+      <div class="stack-components">
+        <span class="sc nvidia">NVIDIA NIM Microservices</span>
+        <span class="sc nvidia">NVIDIA NeMo Framework</span>
+        <span class="sc nvidia">NVIDIA Riva (STT)</span>
+        <span class="sc nvidia">NVIDIA NeMo Guardrails</span>
+        <span class="sc nvidia">NVIDIA Morpheus (Sec.)</span>
+        <span class="sc nvidia">GPU-Level Encryption</span>
+        <span class="sc nvidia">Confidential Computing</span>
+        <span class="sc nvidia">Enterprise SLA 24/7</span>
+      </div>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:14px;">
+        NIM microservices reemplaza los runtime de inferencia genéricos con contenedores optimizados para GPU y certificados por NVIDIA.
+        NeMo Guardrails aplica barreras de seguridad a nivel de modelo — ninguna respuesta sale sin pasar los filtros de PII.
+        NVIDIA Morpheus ejecuta análisis de ciberseguridad en tiempo real sobre los flujos de datos.
+      </p>
+    </div>
+
+    <!-- Resto de capas -->
+    <div class="sec-grid" style="gap:8px;">
+
+      <div class="stack-layer">
+        <div class="stack-header">
+          <div class="stack-num">1</div>
+          <div class="stack-header-text">
+            <h4>Capa de Orquestación Agéntica</h4>
+            <span>Cerebro del sistema · Pipeline de 4 agentes · Estado efímero</span>
+          </div>
+          <div class="stack-badge-nvidia">NVIDIA NIM</div>
+        </div>
+        <div class="stack-body">
+          <div class="stack-components">
+            <span class="sc nvidia">NVIDIA NIM Runtime</span>
+            <span class="sc highlight">LangGraph (estado agéntico)</span>
+            <span class="sc highlight">n8n (flujos estructurados)</span>
+            <span class="sc">Pipeline 4 agentes</span>
+            <span class="sc">TTL sesión: 30 min</span>
+            <span class="sc">Solo tokens · Sin PII</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="stack-header">
+          <div class="stack-num">2</div>
+          <div class="stack-header-text">
+            <h4>Modelos de Inteligencia Artificial</h4>
+            <span>Razonamiento · Creatividad · Transcripción de voz</span>
+          </div>
+        </div>
+        <div class="stack-body">
+          <div class="stack-components">
+            <span class="sc highlight">Claude (Anthropic) — Agente principal</span>
+            <span class="sc nvidia">NVIDIA Riva — STT self-hosted</span>
+            <span class="sc">Perplexity AI — Enriquecimiento público</span>
+            <span class="sc">Retención cero · DPA Enterprise</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="stack-header">
+          <div class="stack-num">3</div>
+          <div class="stack-header-text">
+            <h4>Infraestructura y Despliegue</h4>
+            <span>Cloud certificado · Contenedores aislados · Alta disponibilidad</span>
+          </div>
+        </div>
+        <div class="stack-body">
+          <div class="stack-components">
+            <span class="sc">AWS EC2 / ECS</span>
+            <span class="sc">Docker (contenedores aislados)</span>
+            <span class="sc">AWS RDS</span>
+            <span class="sc">S3 cifrado</span>
+            <span class="sc">Telegram Bot API</span>
+            <span class="sc">Meta Ads API</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="stack-header">
+          <div class="stack-num">4</div>
+          <div class="stack-header-text">
+            <h4>Seguridad y Control de Acceso</h4>
+            <span>7 capas independientes · Auditoría permanente</span>
+          </div>
+          <div class="stack-badge-nvidia">NVIDIA Morpheus</div>
+        </div>
+        <div class="stack-body">
+          <div class="stack-components">
+            <span class="sc nvidia">NVIDIA Morpheus (CyberSec AI)</span>
+            <span class="sc highlight">AWS WAF</span>
+            <span class="sc highlight">MFA obligatorio</span>
+            <span class="sc">API Gateway (filtro PII)</span>
+            <span class="sc">IAM mínimos permisos</span>
+            <span class="sc">CloudTrail inmutable</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="stack-header">
+          <div class="stack-num">5</div>
+          <div class="stack-header-text">
+            <h4>Datos y Cumplimiento Regulatorio</h4>
+            <span>LOPDP · SBS · ISO 27001 · Tokenización automática</span>
+          </div>
+        </div>
+        <div class="stack-body">
+          <div class="stack-components">
+            <span class="sc highlight">Tokenización PII → tokens</span>
+            <span class="sc">Clasificación 3 niveles</span>
+            <span class="sc">DPA firmados</span>
+            <span class="sc">LOPDP Ecuador</span>
+            <span class="sc">Regulaciones SBS</span>
+            <span class="sc">ISO 27001</span>
+            <span class="sc">Derecho eliminación datos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 5. SEGURIDAD ── -->
+  <div class="section" id="seguridad">
+    <span class="section-label">05 · Seguridad</span>
+    <h2 class="section-title">7 capas independientes. Ningún punto de fallo único.</h2>
+    <p class="section-sub">El sistema está construido como una cebolla: si alguien supera una capa, enfrenta seis más. Defense in depth desde el diseño, reforzado con NVIDIA AI Enterprise.</p>
+
+    <div class="sec-grid">
+      <div class="sec-row">
+        <div class="sec-num">1</div>
+        <div class="sec-info">
+          <h4>Firewall y Perímetro de Red</h4>
+          <p>AWS WAF · Solo HTTPS · IPs autorizadas para gestión administrativa · NVIDIA Morpheus monitoreo continuo</p>
+        </div>
+        <div class="sec-status">Activo</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">2</div>
+        <div class="sec-info">
+          <h4>Autenticación de Identidad</h4>
+          <p>MFA obligatorio para todos los accesos humanos · Service accounts con permisos mínimos por agente · Cuentas independientes por rol</p>
+        </div>
+        <div class="sec-status">Activo</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">3</div>
+        <div class="sec-info">
+          <h4>Aislamiento de Contenedores (Docker)</h4>
+          <p>Cada agente vive en su propio contenedor aislado · Fallo o compromiso de uno no afecta al sistema · Compartimentos estancos</p>
+        </div>
+        <div class="sec-status">Activo</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">4</div>
+        <div class="sec-info">
+          <h4>Clasificación y Enmascaramiento de Datos</h4>
+          <p>3 niveles automáticos: Público / Confidencial / Restringido · PII convertida en tokens anónimos antes de llegar a cualquier agente o modelo</p>
+        </div>
+        <div class="sec-status">Activo</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">5</div>
+        <div class="sec-info">
+          <h4>Control de Llamadas IA (API Gateway + NeMo Guardrails)</h4>
+          <p>Filtro de salida PII en cada llamada · <strong>NVIDIA NeMo Guardrails</strong> — barreras de seguridad a nivel de modelo · Bloqueo automático de cédulas y datos médicos</p>
+        </div>
+        <div class="sec-status nvidia">NVIDIA</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">6</div>
+        <div class="sec-info">
+          <h4>Auditoría Permanente e Inmutable</h4>
+          <p>Cada acción del sistema en CloudTrail · No puede borrarse ni modificarse · Retención 1 año · Dashboard gerencial en tiempo real</p>
+        </div>
+        <div class="sec-status">Activo</div>
+      </div>
+      <div class="sec-row">
+        <div class="sec-num">7</div>
+        <div class="sec-info">
+          <h4>Cumplimiento Regulatorio Nativo</h4>
+          <p>LOPDP Ecuador · SBS · ISO 27001 · SOC 2 Type II (NVIDIA Enterprise) · DPA firmados con todos los proveedores · Diseñado para pasar auditoría regulatoria</p>
+        </div>
+        <div class="sec-status">Certificado</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;background:var(--light);border-color:#bfdbfe;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:1.3rem;">🚫</span>
+        <div>
+          <h4 style="font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:8px;">Principio que gobierna toda la arquitectura</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+              <p style="font-size:0.78rem;font-weight:700;color:var(--red);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Nunca sale del perímetro Saludsa</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;">
+                <li style="font-size:0.82rem;color:#334155;">· Números de cédula</li>
+                <li style="font-size:0.82rem;color:#334155;">· Historiales médicos</li>
+                <li style="font-size:0.82rem;color:#334155;">· Datos financieros exactos</li>
+                <li style="font-size:0.82rem;color:#334155;">· Información familiar sensible</li>
+                <li style="font-size:0.82rem;color:#334155;">· Archivos de voz del asesor</li>
+              </ul>
+            </div>
+            <div>
+              <p style="font-size:0.78rem;font-weight:700;color:var(--green);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Puede procesarse externamente</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;">
+                <li style="font-size:0.82rem;color:#334155;">· Nombre y empresa (dato público)</li>
+                <li style="font-size:0.82rem;color:#334155;">· Cargo y sector profesional</li>
+                <li style="font-size:0.82rem;color:#334155;">· Estimaciones de perfil anónimas</li>
+                <li style="font-size:0.82rem;color:#334155;">· Texto de conversación tokenizado</li>
+                <li style="font-size:0.82rem;color:#334155;">· Preguntas sobre planes Saludsa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 6. PROPUESTA ECONÓMICA ── -->
+  <div class="section" id="costos">
+    <span class="section-label">06 · Propuesta Económica</span>
+    <h2 class="section-title">Inversión total transparente. Sin cobros sorpresa.</h2>
+    <p class="section-sub">Desglose completo de honorarios del consultor, infraestructura NVIDIA Enterprise y operación mensual.</p>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Concepto</th>
+          <th style="width:30%">Descripción</th>
+          <th>Modalidad</th>
+          <th>Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- FASE 1: DESARROLLO -->
+        <tr>
+          <td>
+            <span class="cost-phase">Honorarios Consultor</span>
+            Arquitectura y Diseño del Sistema
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">Orquestación NVIDIA, pipeline agéntico, integración Meta Ads, diseño de seguridad</td>
+          <td style="font-size:0.82rem;">80h × $75/h</td>
+          <td>$6,000</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="cost-phase">Honorarios Consultor</span>
+            Desarrollo Agentes Pep &amp; Zizu
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">Fine-tuning sobre NVIDIA NeMo, integración Telegram, voz (NVIDIA Riva), API Gateway</td>
+          <td style="font-size:0.82rem;">80h × $75/h</td>
+          <td>$6,000</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="cost-phase">Honorarios Consultor</span>
+            Testing, Piloto y Capacitación
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">QA, piloto 15 RNs seleccionados, dashboard gerencial, capacitación equipo</td>
+          <td style="font-size:0.82rem;">40h × $75/h</td>
+          <td>$3,000</td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="3">Subtotal Honorarios Consultor (Desarrollo)</td>
+          <td>$15,000</td>
+        </tr>
+
+        <!-- NVIDIA Enterprise -->
+        <tr>
+          <td>
+            <span class="cost-phase">Infraestructura</span>
+            NVIDIA AI Enterprise — Licencia anual
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">NIM microservices, NeMo Guardrails, Riva STT, Morpheus, soporte Enterprise 24/7, ISO 27001 / SOC 2</td>
+          <td style="font-size:0.82rem;">1 nodo GPU / año</td>
+          <td>$9,000</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="cost-phase">Infraestructura</span>
+            AWS (EC2, RDS, S3, WAF, CloudTrail)
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">Infraestructura cloud certificada · Alta disponibilidad · Cifrado en reposo y tránsito</td>
+          <td style="font-size:0.82rem;">$600/mes × 12</td>
+          <td>$7,200</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="cost-phase">Infraestructura</span>
+            APIs IA (Claude — Anthropic)
+          </td>
+          <td style="font-size:0.8rem;color:var(--muted);">Modelo principal de razonamiento · Contrato Enterprise · Retención cero · DPA firmado</td>
+          <td style="font-size:0.82rem;">$35/mes × 12</td>
+          <td>$420</td>
+        </tr>
+        <tr class="subtotal">
+          <td colspan="3">Subtotal Infraestructura Año 1</td>
+          <td>$16,620</td>
+        </tr>
+
+        <tr class="total">
+          <td colspan="3"><strong>INVERSIÓN TOTAL AÑO 1</strong> <span style="font-size:0.75rem;font-weight:400;opacity:0.75;">· Desarrollo + Infraestructura NVIDIA Enterprise + Operación 12 meses</span></td>
+          <td>$31,620</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="cost-note">* Los honorarios del consultor ($15,000) corresponden a un pago único al inicio del proyecto. La infraestructura NVIDIA y AWS son costos operativos anuales a cargo de Saludsa una vez entregado el sistema.</p>
+
+    <!-- Comparativa ROI -->
+    <div class="roi-banner" style="margin-top:28px;">
+      <div style="text-align:center;margin-bottom:20px;">
+        <p style="color:rgba(255,255,255,0.6);font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">Retorno sobre inversión total año 1</p>
+        <p style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);">$31,620 invertidos → <span style="color:var(--gold)">$1,094,400</span> beneficio neto (margen 20%) → <strong style="color:var(--gold)">ROI 34x conservador</strong></p>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.78rem;margin-top:6px;">Payback: la inversión total se recupera en ~11 días de operación a margen del 20%</p>
+      </div>
+      <div class="roi-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="roi-stat"><div class="roi-num">$31.6K</div><div class="roi-lbl">Inversión total año 1</div></div>
+        <div class="roi-stat"><div class="roi-num">$1.09M</div><div class="roi-lbl">Beneficio neto año 1</div></div>
+        <div class="roi-stat"><div class="roi-num">34x</div><div class="roi-lbl">ROI sobre total</div></div>
+        <div class="roi-stat"><div class="roi-num">11 días</div><div class="roi-lbl">Payback total</div></div>
+      </div>
+    </div>
+
+    <!-- Año 2+ -->
+    <div class="card card-gold" style="margin-top:20px;">
+      <h4 style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--navy);margin-bottom:10px;">💡 Año 2 en adelante — Solo infraestructura</h4>
+      <p style="font-size:0.85rem;color:#334155;margin-bottom:12px;">Una vez entregado el sistema, los honorarios del consultor no se repiten. El costo anual se reduce a la infraestructura operativa.</p>
+      <div class="grid-3" style="gap:12px;">
+        <div style="text-align:center;padding:14px;background:var(--gray);border-radius:8px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);font-weight:900;">$16,620</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">Costo anual recurrente</div>
+        </div>
+        <div style="text-align:center;padding:14px;background:var(--gray);border-radius:8px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--green);font-weight:900;">66x</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">ROI año 2 (margen 20%)</div>
+        </div>
+        <div style="text-align:center;padding:14px;background:var(--gray);border-radius:8px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);font-weight:900;">$1,385/mes</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">Costo total mensual año 2+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 7. CRONOGRAMA ── -->
+  <div class="section" id="cronograma">
+    <span class="section-label">07 · Cronograma</span>
+    <h2 class="section-title">8 semanas de desarrollo · 1 mes de piloto.</h2>
+    <p class="section-sub">Sistema completo operando en 11 semanas desde la aprobación.</p>
+
+    <div class="crono-grid">
+      <div class="crono-label">Sem 1</div>
+      <div class="crono-label">Sem 2</div>
+      <div class="crono-label">Sem 3</div>
+      <div class="crono-label">Sem 4</div>
+      <div class="crono-label">Sem 5</div>
+      <div class="crono-label">Sem 6</div>
+      <div class="crono-label">Sem 7</div>
+      <div class="crono-label">Sem 8</div>
+      <div class="crono-label">+1 Mes</div>
+
+      <div class="crono-cell setup">Setup NVIDIA<br>Enterprise</div>
+      <div class="crono-cell setup">Arquitectura<br>Agentes</div>
+      <div class="crono-cell integ">Integración<br>Meta Ads</div>
+      <div class="crono-cell integ">Integración<br>Telegram + Voz</div>
+      <div class="crono-cell testing">Testing<br>QA</div>
+      <div class="crono-cell train">Fine-tuning<br>Saludsa</div>
+      <div class="crono-cell train">Dashboard<br>Gerencial</div>
+      <div class="crono-cell go">🚀 Go Live</div>
+      <div class="crono-cell piloto">Piloto<br>15 RNs</div>
+    </div>
+
+    <div class="crono-legend">
+      <div class="cl"><div class="cl-dot" style="background:#3b82f6;"></div>Setup &amp; Arquitectura</div>
+      <div class="cl"><div class="cl-dot" style="background:#8b5cf6;"></div>Integraciones</div>
+      <div class="cl"><div class="cl-dot" style="background:#f59e0b;"></div>Testing &amp; QA</div>
+      <div class="cl"><div class="cl-dot" style="background:#76b900;"></div>Fine-tuning &amp; Dashboard</div>
+      <div class="cl"><div class="cl-dot" style="background:#059669;"></div>Piloto en Producción</div>
+    </div>
+
+    <!-- Entregables -->
+    <div style="margin-top:28px;">
+      <h4 style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--navy);margin-bottom:16px;">Entregables incluidos</h4>
+      <div class="entregable-list">
+        <div class="entregable"><span class="entregable-check">✅</span><span>Agente Pep — Estratega Meta Ads con orquestación NVIDIA NIM</span><span class="entregable-phase">Setup</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Agente Zizu — Creativo con A/B testing automático</span><span class="entregable-phase">Setup</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Integración Telegram + Voice Notes (NVIDIA Riva STT self-hosted)</span><span class="entregable-phase">Integración</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Pipeline de seguridad: NeMo Guardrails + API Gateway + CloudTrail</span><span class="entregable-phase">Integración</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Fine-tuning con datos reales Saludsa (productos, audiencias, brand)</span><span class="entregable-phase">Entrenamiento</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Dashboard gerencial de reportes y consumo en tiempo real</span><span class="entregable-phase">Entrenamiento</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Capacitación piloto (15 RNs seleccionados) + documentación operativa</span><span class="entregable-phase">Piloto</span></div>
+        <div class="entregable"><span class="entregable-check">✅</span><span>Documentación técnica completa del stack para auditoría interna/regulatoria</span><span class="entregable-phase">Entrega</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 8. CONDICIONES ── -->
+  <div class="section" id="condiciones">
+    <span class="section-label">08 · Condiciones</span>
+    <h2 class="section-title">Términos de contratación.</h2>
+    <div class="grid-2">
+      <div class="condiciones">
+        <h4>💼 Honorarios del Consultor</h4>
+        <div class="cond-list">
+          <div class="cond-item">Pago único de desarrollo: <strong>$15,000 USD</strong></div>
+          <div class="cond-item">50% al inicio del proyecto · 50% a entrega del sistema</div>
+          <div class="cond-item">Transferencia bancaria o acuerdo de pago corporativo Saludsa</div>
+          <div class="cond-item">Plazo de ejecución: 8 semanas calendario desde el pago inicial</div>
+          <div class="cond-item">Garantía de correcciones: 30 días post-entrega sin costo adicional</div>
+        </div>
+      </div>
+      <div class="condiciones">
+        <h4>🔧 Alcance del Servicio</h4>
+        <div class="cond-list">
+          <div class="cond-item">Diseño, desarrollo e implementación de los agentes Pep &amp; Zizu</div>
+          <div class="cond-item">Configuración de infraestructura NVIDIA AI Enterprise + AWS</div>
+          <div class="cond-item">Integración completa con Meta Ads API y Telegram</div>
+          <div class="cond-item">Fine-tuning con datos de Saludsa (productos y brand guidelines)</div>
+          <div class="cond-item">Piloto con 15 RNs seleccionados + capacitación inicial</div>
+          <div class="cond-item">Las licencias NVIDIA AI Enterprise y costos AWS son contratadas directamente por Saludsa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FIRMA / CTA ── -->
+  <div class="firma-section" id="contacto">
+    <div class="firma-text">
+      <span class="section-label">Próximo Paso</span>
+      <h2 class="section-title">Aprobación e inicio.</h2>
+      <p>Confirmada la aprobación en esta reunión, el sistema puede estar operativo en 11 semanas. El MVP existe. Los agentes funcionan. Solo queda escalar.</p>
+    </div>
+    <div>
+      <div class="firma-box">
+        <div class="firma-line">
+          <div class="firma-lbl">Consultor</div>
+          <div class="firma-val">Felipe Salgado Ramos</div>
+        </div>
+        <div class="firma-line">
+          <div class="firma-lbl">Rol</div>
+          <div class="firma-val">Arquitecto de IA · Implementador del Sistema</div>
+        </div>
+        <div class="firma-line">
+          <div class="firma-lbl">Contacto</div>
+          <div class="firma-val">+593 999 793 094 · WhatsApp</div>
+        </div>
+        <div>
+          <div class="firma-lbl">Fecha de reunión</div>
+          <div class="firma-val">27 de mayo de 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<footer>
+  <p>Documento confidencial preparado para la reunión de implementación · Saludsa · Agencia de Marketing de Bolsillo IA · Mayo 2026</p>
+</footer>
+
+</body>
+</html>
